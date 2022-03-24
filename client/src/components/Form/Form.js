@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import FileBase from 'react-file-base64';
+import { cretePost } from '../../actions/posts';
 
 import useStyles from './styles';
 
-const Form = ({ currentId, setCurrentId }) => {
+const Form = () => {
   const [postData, setPostData] = useState({
     creator: '',
     title: '',
@@ -13,7 +14,7 @@ const Form = ({ currentId, setCurrentId }) => {
     tags: '',
     selectedFile: '',
   });
-
+  const dispatch = useDispatch();
   const classes = useStyles();
 
   const clear = () => {};
@@ -21,7 +22,7 @@ const Form = ({ currentId, setCurrentId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(postData);
+    dispatch(cretePost(postData));
   };
 
   return (

@@ -5,7 +5,7 @@ export const postReducer = (state = [], action) => {
     }
 
     case 'CREATE': {
-      return [...state, action.payload];
+      return [...state.data, action.payload];
     }
 
     default:
