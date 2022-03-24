@@ -18,6 +18,12 @@ export const postReducer = (state = [], action) => {
       return state.filter((post) => post._id !== action.payload._id);
     }
 
+    case 'LIKE': {
+      return state.map((post) =>
+        post._id === action.payload._id ? action.payload : post
+      );
+    }
+
     default:
       return state;
   }

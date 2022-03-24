@@ -67,7 +67,7 @@ const Post = ({ post, setCurrentId }) => {
         <Button
           size="small"
           color="primary"
-          // onClick={() => dispatch(likePost(post._id))}
+          onClick={() => dispatch(likePost(post._id))}
         >
           <ThumbUpAlt fontSize="small" /> Like {post.likesCount}{' '}
         </Button>
