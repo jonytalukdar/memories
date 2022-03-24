@@ -2,11 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import FileBase from 'react-file-base64';
-import { cretePost } from '../../actions/posts';
+import { cretePost, updatePost } from '../../actions/posts';
 
 import useStyles from './styles';
 
-const Form = () => {
+const Form = ({ currentId }) => {
+  const { posts } = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const classes = useStyles();
+
+  //states
   const [postData, setPostData] = useState({
     creator: '',
     title: '',
@@ -14,16 +19,26 @@ const Form = () => {
     tags: '',
     selectedFile: '',
   });
-  const dispatch = useDispatch();
-  const classes = useStyles();
 
-  const clear = () => {};
+  const findedPost = posts?.find((post) => post._id === currentId);
+
+  useEffect(() => {
+    if (findedPost) {
+      setPostData(findedPost);
+    }
+  }, [findedPost]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    dispatch(cretePost(postData));
+    if (currentId) {
+      dispatch(updatePost(currentId, postData));
+    } else {
+      dispatch(cretePost(postData));
+    }
   };
+
+  const clear = () => {};
 
   return (
     <Paper className={classes.paper}>

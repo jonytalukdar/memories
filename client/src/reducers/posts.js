@@ -8,6 +8,12 @@ export const postReducer = (state = [], action) => {
       return [...state, action.payload];
     }
 
+    case 'UPDATE': {
+      return state.map((post) =>
+        post._id === action.payload._id ? action.payload : post
+      );
+    }
+
     default:
       return state;
   }
