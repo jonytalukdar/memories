@@ -6,7 +6,7 @@ import { cretePost, updatePost } from '../../actions/posts';
 
 import useStyles from './styles';
 
-const Form = ({ currentId }) => {
+const Form = ({ currentId, setCurrentId }) => {
   const { posts } = useSelector((state) => state);
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -36,9 +36,22 @@ const Form = ({ currentId }) => {
     } else {
       dispatch(cretePost(postData));
     }
+    clear();
   };
 
-  const clear = () => {};
+  const clear = () => {
+    setCurrentId(null);
+    setPostData((prevState) => {
+      return {
+        ...prevState,
+        title: '',
+        creator: '',
+        message: '',
+        selectedFile: '',
+        tags: '',
+      };
+    });
+  };
 
   return (
     <Paper className={classes.paper}>
@@ -48,7 +61,9 @@ const Form = ({ currentId }) => {
         className={`${classes.root} ${classes.form}`}
         onSubmit={handleSubmit}
       >
-        <Typography variant="h6">Create Memory</Typography>
+        <Typography variant="h6">
+          {currentId ? 'Update Memory' : 'Create Memory'}
+        </Typography>
         <TextField
           name="creator"
           variant="outlined"
