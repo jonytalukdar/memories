@@ -14,6 +14,10 @@ export const postReducer = (state = [], action) => {
       );
     }
 
+    case 'DELETE': {
+      return state.filter((post) => post._id !== action.payload._id);
+    }
+
     default:
       return state;
   }

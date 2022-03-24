@@ -11,11 +11,14 @@ import { ThumbUpAlt, DeleteOutline, MoreHoriz } from '@material-ui/icons';
 
 import moment from 'moment';
 
-// import { likePost, deletePost } from '../../../actions/posts';
+import { likePost, deletePost } from '../../../actions/posts';
+import { useDispatch } from 'react-redux';
 import useStyles from './styles';
 
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
+
+  const dispatch = useDispatch();
 
   return (
     <Card className={classes.card}>
@@ -71,7 +74,7 @@ const Post = ({ post, setCurrentId }) => {
         <Button
           size="small"
           color="primary"
-          // onClick={() => dispatch(deletePost(post._id))}
+          onClick={() => dispatch(deletePost(post._id))}
         >
           <DeleteOutline fontSize="small" /> Delete
         </Button>

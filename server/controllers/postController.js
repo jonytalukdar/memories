@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import Post from '../models/postsModel.js';
 
+//get all post
 export const getAllPosts = async (req, res) => {
   try {
     const posts = await Post.find();
@@ -21,6 +22,7 @@ export const createPost = async (req, res) => {
   }
 };
 
+//update post
 export const updatePost = async (req, res) => {
   const { id } = req.params;
 
@@ -33,6 +35,21 @@ export const updatePost = async (req, res) => {
       runValidators: true,
     });
     res.status(200).json({ status: 'success', data: updatedPost });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//delete post
+export const deletePost = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.send({ message: 'Post not found!' });
+
+  try {
+    const post = await Post.findOneAndDelete({ _id: id });
+    res.status(200).json({ status: 'success', data: post });
   } catch (error) {
     console.log(error);
   }
