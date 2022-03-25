@@ -3,6 +3,7 @@ import cors from 'cors';
 import 'dotenv/config';
 import morgan from 'morgan';
 import postsRoutes from './routes/postsRoutes.js';
+import usersRoutes from './routes/usersRoutes.js';
 import { connectDb } from './db/connectDb.js';
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(morgan('dev'));
 app.use(cors());
 
 app.use('/posts', postsRoutes);
+app.use('/users', usersRoutes);
 
 const PORT = process.env.PORT || 5000;
 const startServer = async () => {
