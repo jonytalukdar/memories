@@ -16,6 +16,15 @@ import Icon from '../ui/Icon';
 
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { signup, signin } from '../../actions/auth';
+
+const initialState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
 
 const Auth = () => {
   const classes = useStyles();
@@ -24,12 +33,24 @@ const Auth = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [isSignup, setIsSignup] = useState(true);
+  const [formData, setFormData] = useState(initialState);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (isSignup) {
+      dispatch(signup(formData, history));
+    } else {
+      dispatch(signin(formData, history));
+    }
   };
 
-  const handleChange = (e) => {};
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
@@ -68,15 +89,16 @@ const Auth = () => {
               <>
                 <Input
                   label="First Name"
-                  name="firstname"
-                  //   autoFocus="autoFocus"
+                  name="firstName"
                   autoFocus
                   half
+                  value={formData.firstName}
                   handleChange={handleChange}
                 />
                 <Input
-                  name="lastname"
+                  name="lastName"
                   label="Last Name"
+                  value={formData.lastName}
                   handleChange={handleChange}
                   half
                 />
@@ -86,12 +108,14 @@ const Auth = () => {
               name="email"
               type="email"
               label="Email"
+              value={formData.email}
               handleChange={handleChange}
             />
             <Input
               name="password"
               type={showPassword ? 'text' : 'password'}
               label="Password"
+              value={formData.password}
               handleChange={handleChange}
               handleShowPassword={handleShowPassword}
             />
@@ -100,6 +124,7 @@ const Auth = () => {
                 name="confirmPassword"
                 type={showPassword ? 'text' : 'password'}
                 label="Confirm Password"
+                vlaue={formData.confirmPassword}
                 handleChange={handleChange}
                 handleShowPassword={handleShowPassword}
               />
