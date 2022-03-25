@@ -50,7 +50,7 @@ const Navbar = () => {
             component={Link}
             to="/auth"
             variant="contained"
-            color="secondary"
+            color="primary"
           >
             Login
           </Button>
