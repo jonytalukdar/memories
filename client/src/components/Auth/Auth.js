@@ -15,10 +15,12 @@ import Input from './Input';
 import Icon from '../ui/Icon';
 
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const Auth = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [showPassword, setShowPassword] = useState(false);
   const [isSignup, setIsSignup] = useState(true);
@@ -39,11 +41,12 @@ const Auth = () => {
   };
 
   const googleSuccess = async (res) => {
-    const result = res?.rofileObj;
+    const result = res?.profileObj;
     const token = res?.tokenId;
 
     try {
       dispatch({ type: 'AUTH', data: { result, token } });
+      history.push('/');
     } catch (error) {
       console.log(error);
     }
