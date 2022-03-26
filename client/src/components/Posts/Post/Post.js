@@ -7,17 +7,17 @@ import {
   Button,
   Typography,
 } from '@material-ui/core/';
-import { ThumbUpAlt, DeleteOutline, MoreHoriz } from '@material-ui/icons';
+import { DeleteOutline, MoreHoriz } from '@material-ui/icons';
 
 import moment from 'moment';
 
 import { likePost, deletePost } from '../../../actions/posts';
 import { useDispatch } from 'react-redux';
 import useStyles from './styles';
+import Likes from './Like';
 
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
-
   const dispatch = useDispatch();
 
   return (
@@ -69,7 +69,8 @@ const Post = ({ post, setCurrentId }) => {
           color="primary"
           onClick={() => dispatch(likePost(post._id))}
         >
-          <ThumbUpAlt fontSize="small" /> Like {post.likes.length}{' '}
+          {/* <ThumbUpAlt fontSize="small" /> Like {post.likes.length}{' '} */}
+          <Likes post={post} />
         </Button>
         <Button
           size="small"
