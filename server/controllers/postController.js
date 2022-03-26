@@ -4,7 +4,7 @@ import Post from '../models/postsModel.js';
 //get all post
 export const getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find().sort('-createdAt');
     res
       .status(200)
       .json({ status: 'success', nbHits: posts.length, data: posts });
@@ -15,7 +15,7 @@ export const getAllPosts = async (req, res) => {
 
 export const createPost = async (req, res) => {
   try {
-    const post = await Post.create(req.body);
+    const post = await Post.create({ ...req.body });
     res.status(201).json({ status: 'success', data: post });
   } catch (error) {
     console.log(error);

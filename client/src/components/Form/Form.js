@@ -11,9 +11,10 @@ const Form = ({ currentId, setCurrentId }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
+  const user = JSON.parse(localStorage.getItem('profile'));
+
   //states
   const [postData, setPostData] = useState({
-    creator: '',
     title: '',
     message: '',
     tags: '',
@@ -32,9 +33,11 @@ const Form = ({ currentId, setCurrentId }) => {
     e.preventDefault();
 
     if (currentId) {
-      dispatch(updatePost(currentId, postData));
+      dispatch(
+        updatePost(currentId, { ...postData, creator: user?.result?.name })
+      );
     } else {
-      dispatch(cretePost(postData));
+      dispatch(cretePost({ ...postData, creator: user?.result?.name }));
     }
     clear();
   };
@@ -45,13 +48,23 @@ const Form = ({ currentId, setCurrentId }) => {
       return {
         ...prevState,
         title: '',
-        creator: '',
+
         message: '',
         selectedFile: '',
         tags: '',
       };
     });
   };
+
+  if (!user?.result) {
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant="h6" align="center">
+          Please login to create your own memories and likes other's
+        </Typography>
+      </Paper>
+    );
+  }
 
   return (
     <Paper className={classes.paper}>
@@ -64,7 +77,7 @@ const Form = ({ currentId, setCurrentId }) => {
         <Typography variant="h6">
           {currentId ? 'Update Memory' : 'Create Memory'}
         </Typography>
-        <TextField
+        {/* <TextField
           name="creator"
           variant="outlined"
           label="Creator"
@@ -73,7 +86,7 @@ const Form = ({ currentId, setCurrentId }) => {
           onChange={(e) =>
             setPostData({ ...postData, creator: e.target.value })
           }
-        />
+        /> */}
         <TextField
           name="title"
           variant="outlined"
