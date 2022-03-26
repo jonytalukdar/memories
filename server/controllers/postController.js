@@ -70,25 +70,20 @@ export const likePost = async (req, res) => {
   try {
     const post = await Post.findById({ _id: id });
 
-    const index = post.likes.findIndex((id) => id === String(req.userId));
-    console.log(index);
+    const index = await post.likes.findIndex((id) => id === String(req.userId));
 
     if (index === -1) {
       //like the post
       post.likes.push(req.userId);
     } else {
       //dislike the post
-      post.likes = post.likes.filter((id) => id !== String(userId));
+      post.likes = post.likes.filter((id) => id !== String(req.userId));
     }
 
-    const updatedLike = await Post.findByIdAndUpdate(
-      id,
-      { likesCount: post },
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+    const updatedLike = await Post.findByIdAndUpdate(id, post, {
+      new: true,
+      runValidators: true,
+    });
     res.status(200).json({ status: 'success', data: updatedLike });
   } catch (error) {
     console.log(error);
