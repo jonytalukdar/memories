@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const postSchema = new Schema({
   title: String,
   creator: String,
+  creatorId: String,
   message: String,
   selectedFile: String,
   tags: [String],

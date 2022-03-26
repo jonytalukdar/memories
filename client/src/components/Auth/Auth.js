@@ -32,7 +32,7 @@ const Auth = () => {
   const history = useHistory();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [isSignup, setIsSignup] = useState(true);
+  const [isSignup, setIsSignup] = useState(false);
   const [formData, setFormData] = useState(initialState);
 
   const handleSubmit = (e) => {

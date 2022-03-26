@@ -1,6 +1,13 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'http://localhost:5000' });
+const defaultOptions = {
+  baseURL: 'http://localhost:5000',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
+
+const API = axios.create(defaultOptions);
 
 API.interceptors.request.use((req) => {
   const result = JSON.parse(localStorage.getItem('profile'));

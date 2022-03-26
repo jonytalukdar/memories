@@ -15,7 +15,7 @@ export const getAllPosts = async (req, res) => {
 
 export const createPost = async (req, res) => {
   try {
-    const post = await Post.create({ ...req.body });
+    const post = await Post.create({ ...req.body, creatorId: req.userId });
     res.status(201).json({ status: 'success', data: post });
   } catch (error) {
     console.log(error);

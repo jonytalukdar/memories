@@ -4,7 +4,7 @@ import { ThumbUpAlt, ThumbUpAltOutlined } from '@material-ui/icons';
 const Likes = ({ post }) => {
   if (post.likes.length > 0) {
     return post.likes.find(
-      (like) => like === (post?.result?.googleId || post?.result?._id)
+      (like) => like._id === (post?.result?.googleId || post?.result?._id)
     ) ? (
       <>
         <ThumbUpAlt fontSize="small" />
@@ -23,7 +23,7 @@ const Likes = ({ post }) => {
 
   return (
     <>
-      <ThumbUpAlt />
+      <ThumbUpAltOutlined />
       &nbsp; Like
     </>
   );
