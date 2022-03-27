@@ -38,7 +38,7 @@ const Navbar = () => {
       <div className={classes.brandContainer}>
         <Typography
           component={Link}
-          to="/"
+          to="/posts"
           className={classes.heading}
           variant="h2"
           align="center"
