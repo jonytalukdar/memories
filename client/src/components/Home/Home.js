@@ -9,6 +9,7 @@ import {
   Button,
   AppBar,
 } from '@material-ui/core';
+import ChipInput from 'material-ui-chip-input';
 import { useLocation, useHistory } from 'react-router-dom';
 import useStyles from './styles';
 import Posts from '../Posts/Posts';
@@ -22,19 +23,43 @@ const useQuery = () => {
 };
 
 const Home = () => {
+  const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
   const query = useQuery();
   const page = query.get('page');
-  const search = query.get('searchQuery');
+  const searchQuery = query.get('searchQuery');
 
   //states
   const [currentId, setCurrentId] = useState(null);
+  const [search, setSearch] = useState('');
+  const [tags, setTags] = useState([]);
 
   useEffect(() => {
     dispatch(getPosts());
   }, [currentId, dispatch]);
 
+  const searchPost = () => {
+    if (search.trim()) {
+      //dispatch for search post
+    } else {
+      history.push('/');
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.keyCode === 13) {
+      //search   from backend
+      searchPost();
+    }
+  };
+
+  const onAdd = (tag) => {
+    setTags([...tags, tag]);
+  };
+  const onDelete = (tagToDelte) => {
+    setTags(tags.filter((tag) => tag !== tagToDelte));
+  };
   return (
     <Grow in>
       <Container maxWidth="xl">
@@ -58,9 +83,29 @@ const Home = () => {
                 name="search"
                 variant="outlined"
                 label="Search Memories"
-                value={'text'}
-                onChange={() => {}}
+                onKeyPress={handleKeyPress}
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
               />
+              <ChipInput
+                style={{ margin: '10px 0' }}
+                value={tags}
+                onChange={(chips) => setTags(chips)}
+                onAdd={onAdd}
+                onDelete={onDelete}
+                label="Search Tags"
+                variant="outlined"
+              />
+              <Button
+                className={classes.searchButton}
+                onClick={searchPost}
+                color="primary"
+                variant="contained"
+              >
+                Search
+              </Button>
             </AppBar>
             <Form currentId={currentId} setCurrentId={setCurrentId} />
             <Paper elevation={5} className={classes.paginate}>
