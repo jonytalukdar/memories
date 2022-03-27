@@ -26,5 +26,13 @@ export const updatePost = (id, postData) =>
 export const deletePost = (id) => API.delete(`${`/posts`}/${id}`);
 export const likePost = (id) => API.patch(`${`/posts`}/${id}/likePost`);
 
+//get post by search
+export const fetchPostsBySearch = (searchQuery) =>
+  API.get(
+    `/posts/search?searchQuery=${searchQuery.search || ''}&tags=${
+      searchQuery.tags
+    }`
+  );
+
 export const signUp = (formData) => API.post('/users/signup', formData);
 export const signIn = (formData) => API.post('/users/signin', formData);

@@ -16,7 +16,7 @@ import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
 import Paginate from '../Paginate/Paginatation';
 import { useDispatch } from 'react-redux';
-import { getPosts } from '../../actions/posts';
+import { getPosts, getPostsBySearch } from '../../actions/posts';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -42,6 +42,7 @@ const Home = () => {
   const searchPost = () => {
     if (search.trim()) {
       //dispatch for search post
+      dispatch(getPostsBySearch({ search, tags: tags.join(',') }));
     } else {
       history.push('/');
     }
