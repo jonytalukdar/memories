@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import FileBase from 'react-file-base64';
+import { useHistory } from 'react-router-dom';
 import { cretePost, updatePost } from '../../actions/posts';
 
 import useStyles from './styles';
 
 const Form = ({ currentId, setCurrentId }) => {
+  const history = useHistory();
   const { posts } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -37,7 +39,9 @@ const Form = ({ currentId, setCurrentId }) => {
         updatePost(currentId, { ...postData, creator: user?.result?.name })
       );
     } else {
-      dispatch(cretePost({ ...postData, creator: user?.result?.name }));
+      dispatch(
+        cretePost({ ...postData, creator: user?.result?.name }, history)
+      );
     }
     clear();
   };

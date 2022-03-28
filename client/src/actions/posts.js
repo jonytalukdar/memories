@@ -47,11 +47,12 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
   }
 };
 
-export const cretePost = (post) => async (dispatch) => {
+export const cretePost = (post, history) => async (dispatch) => {
   dispatch({ type: START_LOADING });
 
   try {
     const { data } = await api.createPost(post);
+
     dispatch({ type: CREATE_POST, payload: data.data });
 
     dispatch({ type: END_LOADING });
