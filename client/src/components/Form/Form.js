@@ -7,7 +7,7 @@ import { cretePost, updatePost } from '../../actions/posts';
 import useStyles from './styles';
 
 const Form = ({ currentId, setCurrentId }) => {
-  const { posts } = useSelector((state) => state);
+  const { posts } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
   const classes = useStyles();
 

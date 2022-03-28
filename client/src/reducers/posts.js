@@ -10,11 +10,21 @@ import {
 export const postReducer = (state = [], action) => {
   switch (action.type) {
     case FETCH_POSTS: {
-      return action.payload;
+      return {
+        ...state,
+        posts: action.payload.data,
+        page: action.payload.currentPage,
+        numberOfPages: action.payload.numberOfPages,
+      };
     }
 
     case FETCH_POSTS_BY_SEARCH: {
-      return action.payload;
+      return {
+        ...state,
+        posts: action.payload.data,
+        page: action.payload.currentPage,
+        numberOfPages: action.payload.numberOfPages,
+      };
     }
 
     case CREATE_POST: {

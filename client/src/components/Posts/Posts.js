@@ -7,9 +7,11 @@ import useStyles from './styles';
 
 const Posts = ({ setCurrentId }) => {
   const classes = useStyles();
-  const posts = useSelector((state) => state.posts);
+  const { posts } = useSelector((state) => state.posts);
 
-  if (posts.length === 0) {
+  console.log(posts);
+
+  if (!posts) {
     return <CircularProgress />;
   }
 

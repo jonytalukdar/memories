@@ -11,7 +11,7 @@ import {
 export const getPosts = (page) => async (dispatch) => {
   try {
     const { data } = await api.fetchPosts(page);
-    dispatch({ type: FETCH_POSTS, payload: data.data });
+    dispatch({ type: FETCH_POSTS, payload: data });
   } catch (error) {
     console.log(error);
   }
@@ -20,8 +20,7 @@ export const getPosts = (page) => async (dispatch) => {
 export const getPostsBySearch = (searchQuery) => async (dispatch) => {
   try {
     const { data } = await api.fetchPostsBySearch(searchQuery);
-    dispatch({ type: FETCH_POSTS_BY_SEARCH, payload: data.data });
-    console.log(data);
+    dispatch({ type: FETCH_POSTS_BY_SEARCH, payload: data });
   } catch (error) {
     console.log(error);
   }
