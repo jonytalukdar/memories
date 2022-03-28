@@ -6,12 +6,15 @@ import {
   deletePost,
   likePost,
   getPostsBySearch,
+  getSinglePost,
 } from '../controllers/postController.js';
 import authenctication from '../middleware/authentication.js';
 
 const router = express.Router();
 
 router.get('/', getAllPosts);
+
+router.get('/:id', getSinglePost);
 
 router.get('/search', getPostsBySearch);
 

@@ -8,6 +8,7 @@ import {
   FETCH_POSTS_BY_SEARCH,
   START_LOADING,
   END_LOADING,
+  FETCH_POST,
 } from '../constants/actionTypes';
 
 export const getPosts = (page) => async (dispatch) => {
@@ -15,6 +16,18 @@ export const getPosts = (page) => async (dispatch) => {
   try {
     const { data } = await api.fetchPosts(page);
     dispatch({ type: FETCH_POSTS, payload: data });
+
+    dispatch({ type: END_LOADING });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getPost = (id) => async (dispatch) => {
+  dispatch({ type: START_LOADING });
+  try {
+    const { data } = await api.fetchPost(id);
+    dispatch({ type: FETCH_POST, payload: data });
 
     dispatch({ type: END_LOADING });
   } catch (error) {

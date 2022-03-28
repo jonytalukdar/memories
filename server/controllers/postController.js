@@ -26,6 +26,24 @@ export const getAllPosts = async (req, res) => {
   }
 };
 
+//GET  SINGLE POST
+export const getSinglePost = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.send({ message: 'Post not found!' });
+  try {
+    const post = await Post.findById(id);
+
+    res.status(200).json({
+      status: 'success',
+      data: post,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getPostsBySearch = async (req, res) => {
   const { searchQuery, tags } = req.query;
 

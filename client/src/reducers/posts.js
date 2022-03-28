@@ -2,6 +2,7 @@ import {
   CREATE_POST,
   DELETE_POST,
   END_LOADING,
+  FETCH_POST,
   FETCH_POSTS,
   FETCH_POSTS_BY_SEARCH,
   LIKE_POST,
@@ -9,7 +10,7 @@ import {
   UPDATE_POST,
 } from '../constants/actionTypes';
 
-const initialState = { isLoading: true, posts: [] };
+const initialState = { isLoading: true, posts: [], post: {} };
 
 export const postReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -19,6 +20,13 @@ export const postReducer = (state = initialState, action) => {
         posts: action.payload.data,
         page: action.payload.currentPage,
         numberOfPages: action.payload.numberOfPages,
+      };
+    }
+
+    case FETCH_POST: {
+      return {
+        ...state,
+        post: action.payload.data,
       };
     }
 
