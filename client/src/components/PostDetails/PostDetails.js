@@ -28,7 +28,11 @@ const PostDetails = () => {
   }, [id, dispatch]);
 
   if (isLoading) {
-    return <CircularProgress />;
+    return (
+      <Paper className={classes.loadingPaper} elevation={6}>
+        <CircularProgress size="7em" />
+      </Paper>
+    );
   }
 
   return (

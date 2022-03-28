@@ -8,6 +8,7 @@ import {
   Typography,
   ButtonBase,
 } from '@material-ui/core/';
+
 import { DeleteOutline, MoreHoriz } from '@material-ui/icons';
 
 import moment from 'moment';
@@ -30,7 +31,7 @@ const Post = ({ post, setCurrentId }) => {
 
   return (
     <Card className={classes.card}>
-      <ButtonBase className={classes.cardActions} onClick={openPost}>
+      <ButtonBase className={classes.cardAction} onClick={openPost}>
         <CardMedia
           className={classes.media}
           image={
@@ -45,18 +46,23 @@ const Post = ({ post, setCurrentId }) => {
             {moment(post.createdAt).fromNow()}
           </Typography>
         </div>
-        <div className={classes.overlay2}>
-          {user?.result?.googleId === post?.creatorId ||
-            (user?.result?._id === post?.creatorId && (
+
+        {user?.result?.googleId === post?.creatorId ||
+          (user?.result?._id === post?.creatorId && (
+            <div className={classes.overlay2} name="edit">
               <Button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentId(post._id);
+                }}
                 style={{ color: 'white' }}
                 size="small"
-                onClick={() => setCurrentId(post._id)}
               >
                 <MoreHoriz fontSize="medium" />
               </Button>
-            ))}
-        </div>
+            </div>
+          ))}
+
         <div className={classes.details}>
           <Typography variant="body2" color="textSecondary" component="h2">
             {post?.tags?.map((tag) => `#${tag} `)}
