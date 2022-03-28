@@ -11,7 +11,7 @@ import {
 import { useHistory, useParams } from 'react-router-dom';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPost } from '../../actions/posts.js';
+import { getPost, getPostsBySearch } from '../../actions/posts.js';
 
 const PostDetails = () => {
   const classes = useStyles();
@@ -21,9 +21,19 @@ const PostDetails = () => {
   const history = useHistory();
   const { id } = useParams();
 
+  //for single post
   useEffect(() => {
     dispatch(getPost(id));
   }, [id, dispatch]);
+
+  //for recomended post
+  useEffect(() => {
+    if (post) {
+      dispatch(
+        getPostsBySearch({ search: 'none', tags: post?.tags?.join(',') })
+      );
+    }
+  }, [post, dispatch]);
 
   if (isLoading) {
     return (
@@ -32,6 +42,12 @@ const PostDetails = () => {
       </Paper>
     );
   }
+
+  const recomendedPost = posts?.filter(({ _id }) => _id !== post._id);
+
+  const openPost = (id) => {
+    history.push(`/posts/${id}`);
+  };
 
   return (
     <Paper style={{ borderRadiues: '12px', padding: '20px' }} elevation={5}>
@@ -46,7 +62,7 @@ const PostDetails = () => {
             color="textSecondary"
             component="h2"
           >
-            {post.tags.map((tag) => `#${tag} `)}
+            {post?.tags?.map((tag) => `#${tag} `)}
           </Typography>
           <Typography gutterBottom variant="body1" component="p">
             {post.message}
@@ -76,6 +92,41 @@ const PostDetails = () => {
           />
         </div>
       </div>
+      {recomendedPost.length && (
+        <div className={classes.section}>
+          <Typography gutterBottom variant="h5">
+            You might also like:
+          </Typography>
+          <Divider />
+          <div className={classes.recommendedPosts}>
+            {recomendedPost.map((post) => {
+              const { title, creator, _id, likes, message, selectedFile } =
+                post;
+              return (
+                <div
+                  style={{ margin: '20px', cursor: 'pointer' }}
+                  key={_id}
+                  onClick={() => openPost(_id)}
+                >
+                  <Typography gutterBottom variant="h6">
+                    {title}
+                  </Typography>
+                  <Typography gutterBottom variant="subtitle2">
+                    {creator}
+                  </Typography>
+                  <Typography gutterBottom variant="subtitle2">
+                    {message}
+                  </Typography>
+                  <Typography gutterBottom variant="subtitle1">
+                    Likes: {likes.length}
+                  </Typography>
+                  <img src={selectedFile} alt={title} width="200px" />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </Paper>
   );
 };

@@ -14,11 +14,11 @@ const router = express.Router();
 
 router.get('/', getAllPosts);
 
-router.get('/:id', getSinglePost);
-
 router.get('/search', getPostsBySearch);
 
 router.post('/', authenctication, createPost);
+
+router.get('/:id', getSinglePost);
 
 router.patch('/:id', authenctication, updatePost);
 

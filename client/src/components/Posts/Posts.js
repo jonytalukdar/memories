@@ -9,9 +9,10 @@ const Posts = ({ setCurrentId }) => {
   const classes = useStyles();
   const { posts, isLoading } = useSelector((state) => state.posts);
 
-  if (isLoading) return <CircularProgress />;
+  console.log(posts);
+  console.log(isLoading);
 
-  if (!posts.length && !isLoading) return <h2>No Posts are found!</h2>;
+  if (isLoading) return <CircularProgress />;
 
   return (
     <Grid
