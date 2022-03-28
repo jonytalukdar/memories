@@ -6,30 +6,42 @@ import {
   LIKE_POST,
   UPDATE_POST,
   FETCH_POSTS_BY_SEARCH,
+  START_LOADING,
+  END_LOADING,
 } from '../constants/actionTypes';
 
 export const getPosts = (page) => async (dispatch) => {
+  dispatch({ type: START_LOADING });
   try {
     const { data } = await api.fetchPosts(page);
     dispatch({ type: FETCH_POSTS, payload: data });
+
+    dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error);
   }
 };
 
 export const getPostsBySearch = (searchQuery) => async (dispatch) => {
+  dispatch({ type: START_LOADING });
   try {
     const { data } = await api.fetchPostsBySearch(searchQuery);
     dispatch({ type: FETCH_POSTS_BY_SEARCH, payload: data });
+
+    dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error);
   }
 };
 
 export const cretePost = (post) => async (dispatch) => {
+  dispatch({ type: START_LOADING });
+
   try {
     const { data } = await api.createPost(post);
     dispatch({ type: CREATE_POST, payload: data.data });
+
+    dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error);
   }

@@ -5,11 +5,12 @@ import { Link } from 'react-router-dom';
 import { Pagination, PaginationItem } from '@material-ui/lab';
 import { ArrowBack, ArrowForward } from '@material-ui/icons';
 import { getPosts } from '../../actions/posts';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Paginate = ({ page }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { numberOfPages } = useSelector((state) => state.posts);
 
   useEffect(() => {
     if (page) {
@@ -20,11 +21,15 @@ const Paginate = ({ page }) => {
   return (
     <Pagination
       classes={{ ul: classes.ul }}
-      count={5}
-      page={1}
+      count={numberOfPages}
+      page={Number(page || 1)}
       color="primary"
       renderItem={(item) => (
-        <PaginationItem component={Link} to={`/posts?page=${1}`} {...item} />
+        <PaginationItem
+          component={Link}
+          to={`/posts?page=${item.page}`}
+          {...item}
+        />
       )}
     />
   );
