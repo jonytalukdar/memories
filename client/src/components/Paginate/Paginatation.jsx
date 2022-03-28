@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import useStyles from './styles';
 import { Link } from 'react-router-dom';
 import { Pagination, PaginationItem } from '@material-ui/lab';
 import { ArrowBack, ArrowForward } from '@material-ui/icons';
+import { getPosts } from '../../actions/posts';
+import { useDispatch } from 'react-redux';
 
-const Paginate = () => {
+const Paginate = ({ page }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (page) {
+      dispatch(getPosts(page));
+    }
+  }, [page, dispatch]);
+
   return (
     <Pagination
       classes={{ ul: classes.ul }}

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import decode from 'jwt-decode';
 
 import { AppBar, Typography, Toolbar, Avatar, Button } from '@material-ui/core';
@@ -38,7 +38,7 @@ const Navbar = () => {
       <div className={classes.brandContainer}>
         <Typography
           component={Link}
-          to="/posts"
+          to="/"
           className={classes.heading}
           variant="h2"
           align="center"

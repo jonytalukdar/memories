@@ -43,16 +43,8 @@ const Form = ({ currentId, setCurrentId }) => {
   };
 
   const clear = () => {
-    setPostData((prevState) => {
-      return {
-        ...prevState,
-        title: '',
-        message: '',
-        selectedFile: '',
-        tags: '',
-      };
-    });
-    // setCurrentId(null);
+    setPostData({ title: '', message: '', tags: '', selectedFile: '' });
+    setCurrentId(null);
   };
 
   if (!user?.result) {

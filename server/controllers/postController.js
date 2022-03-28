@@ -3,8 +3,39 @@ import Post from '../models/postsModel.js';
 
 //get all post
 export const getAllPosts = async (req, res) => {
+  const { page } = req.query;
   try {
-    const posts = await Post.find().sort('-createdAt');
+    const limit = 8;
+    const startIndex = (Number(page) - 1) * limit;
+    const total = await Post.countDocuments({});
+
+    const posts = await Post.find()
+      .sort('-createdAt')
+      .limit(limit)
+      .skip(startIndex);
+
+    res.status(200).json({
+      status: 'success',
+      nbHits: posts.length,
+      currentPage: page,
+      numberOfPages: Math.ceil(total / limit),
+      data: posts,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getPostsBySearch = async (req, res) => {
+  const { searchQuery, tags } = req.query;
+
+  try {
+    //convert regular express
+    const title = new RegExp(searchQuery, 'i');
+
+    const posts = await Post.find({
+      $or: [{ title }, { tags: { $in: tags.split(',') } }],
+    });
     res
       .status(200)
       .json({ status: 'success', nbHits: posts.length, data: posts });
