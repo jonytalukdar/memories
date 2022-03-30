@@ -1,22 +1,20 @@
 import React from 'react';
 import { ThumbUpAlt, ThumbUpAltOutlined } from '@material-ui/icons';
 
-const Likes = ({ post }) => {
-  if (post.likes.length > 0) {
-    return post.likes.find(
-      (like) => like._id === (post?.result?.googleId || post?.result?._id)
-    ) ? (
+const Likes = ({ likes, userId }) => {
+  if (likes?.length > 0) {
+    return likes.find((like) => like._id === userId) ? (
       <>
-        <ThumbUpAlt fontSize="small" />
+        <ThumbUpAltOutlined fontSize="small" />
         &nbsp;
-        {post.likes.length > 2
-          ? `You and ${post.likes.length - 1} others`
-          : ` ${post.likes.length} like${post.likes.length > 1 ? 's' : ''}`}
+        {likes.length > 2
+          ? `You and ${likes.length - 1} others`
+          : ` ${likes.length} like${likes.length > 1 ? 's' : ''}`}
       </>
     ) : (
       <>
-        <ThumbUpAltOutlined fontSize="small" /> &nbsp;
-        {post.likes.length} {post.likes.length === 1 ? 'like' : 'likes'}
+        <ThumbUpAlt fontSize="small" /> &nbsp;
+        {likes.length} {likes.length === 1 ? 'like' : 'likes'}
       </>
     );
   }
