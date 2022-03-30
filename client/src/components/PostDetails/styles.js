@@ -9,6 +9,7 @@ export default makeStyles((theme) => ({
   },
   card: {
     display: 'flex',
+    justifyContent: 'space-between',
     width: '100%',
     [theme.breakpoints.down('sm')]: {
       flexWrap: 'wrap',
@@ -18,10 +19,11 @@ export default makeStyles((theme) => ({
   section: {
     borderRadius: '20px',
     margin: '10px',
-    flex: 1,
+    flex: 0.7,
   },
   imageSection: {
     marginLeft: '20px',
+    flex: 0.3,
     [theme.breakpoints.down('sm')]: {
       marginLeft: 0,
     },
@@ -39,5 +41,14 @@ export default makeStyles((theme) => ({
     padding: '20px',
     borderRadius: '15px',
     height: '39vh',
+  },
+  commentsOuterContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  commentsInnerContainer: {
+    height: '200px',
+    marginRight: '30px',
+    overflow: 'auto',
   },
 }));

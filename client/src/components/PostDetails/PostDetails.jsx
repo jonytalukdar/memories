@@ -12,6 +12,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPost, getPostsBySearch } from '../../actions/posts.js';
+import Comments from './Comments.jsx';
 
 const PostDetails = () => {
   const classes = useStyles();
@@ -67,18 +68,16 @@ const PostDetails = () => {
           <Typography gutterBottom variant="body1" component="p">
             {post.message}
           </Typography>
-          <Typography variant="h6">Created by: {post.name}</Typography>
+          <Typography variant="h6">Created by: {post.creator}</Typography>
           <Typography variant="body1">
             {moment(post.createdAt).fromNow()}
           </Typography>
           <Divider style={{ margin: '20px 0' }} />
-          <Typography variant="body1">
+          {/* <Typography variant="body1">
             <strong>Realtime Chat - coming soon!</strong>
-          </Typography>
-          <Divider style={{ margin: '20px 0' }} />
-          <Typography variant="body1">
-            <strong>Comments - coming soon!</strong>
-          </Typography>
+          </Typography> */}
+          {/* <Divider style={{ margin: '20px 0' }} /> */}
+          <Comments post={post} />
           <Divider style={{ margin: '20px 0' }} />
         </div>
         <div className={classes.imageSection}>

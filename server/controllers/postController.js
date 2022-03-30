@@ -138,3 +138,22 @@ export const likePost = async (req, res) => {
     console.log(error);
   }
 };
+
+export const postComment = async (req, res) => {
+  const { id } = req.params;
+  const { comment } = req.body;
+
+  try {
+    const post = await Post.findById(id);
+    post.comments.push(comment);
+
+    const updatedComment = await Post.findByIdAndUpdate(id, post, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(201).json({ status: 'success', data: updatedComment });
+  } catch (error) {
+    console.log(error);
+  }
+};

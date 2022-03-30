@@ -1,4 +1,5 @@
 import {
+  COMMENT_POST,
   CREATE_POST,
   DELETE_POST,
   END_LOADING,
@@ -10,7 +11,7 @@ import {
   UPDATE_POST,
 } from '../constants/actionTypes';
 
-const initialState = { isLoading: true, posts: [], post: {} };
+const initialState = { isLoading: true, posts: [], post: {}, comments: [] };
 
 export const postReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -68,6 +69,13 @@ export const postReducer = (state = initialState, action) => {
         posts: state.posts.map((post) =>
           post._id === action.payload._id ? action.payload : post
         ),
+      };
+    }
+
+    case COMMENT_POST: {
+      return {
+        ...state,
+        comments: [...state.comments, action.payload],
       };
     }
 

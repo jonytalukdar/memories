@@ -9,6 +9,7 @@ import {
   START_LOADING,
   END_LOADING,
   FETCH_POST,
+  COMMENT_POST,
 } from '../constants/actionTypes';
 
 export const getPosts = (page) => async (dispatch) => {
@@ -83,6 +84,15 @@ export const likePost = (id) => async (dispatch) => {
   try {
     const { data } = await api.likePost(id);
     dispatch({ type: LIKE_POST, payload: data.data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const postComment = (comment, id) => async (dispatch) => {
+  try {
+    const { data } = await api.postComment(comment, id);
+    dispatch({ type: LIKE_POST, payload: data.data.comments });
   } catch (error) {
     console.log(error);
   }
