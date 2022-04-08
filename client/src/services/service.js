@@ -21,7 +21,7 @@ API.interceptors.request.use((req) => {
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async (page) => {
   try {
-    const response = await API.get(`/posts?page=${page}`);
+    const response = await API.get(`posts?page=${page}`);
     return response.data;
   } catch (error) {
     return error.message;
@@ -34,6 +34,32 @@ export const createPost = createAsyncThunk(
     try {
       const response = await API.post('/posts', postData);
       return response.data;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
+export const fetchPost = createAsyncThunk('posts/fetchPost', async (id) => {
+  try {
+    const { data } = await API.get(`/posts/${id}`);
+    return data.data;
+  } catch (error) {
+    return error.message;
+  }
+});
+
+export const fetchPostsBySearch = createAsyncThunk(
+  'posts/fetchPostBySearch',
+  async (searchQuery) => {
+    try {
+      const { data } = await API.get(
+        `/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${
+          searchQuery.tags
+        }`
+      );
+
+      return data;
     } catch (error) {
       return error.message;
     }

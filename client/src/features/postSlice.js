@@ -2,12 +2,15 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   createPost,
   deletePost,
+  fetchPost,
   fetchPosts,
+  fetchPostsBySearch,
   updatePost,
 } from '../services/service';
 
 const initialState = {
   posts: [],
+  post: {},
   status: 'idle',
   error: null,
 };
@@ -24,9 +27,10 @@ export const postSlice = createSlice({
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.status = 'success';
 
-        const loadedPost = action.payload.data.map((post) => post);
+        state.page = action.payload.currentPage;
+        state.numberOfPages = action.payload.numberOfPages;
 
-        state.posts = state.posts.concat(loadedPost);
+        state.posts = action.payload.data;
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         state.error = action.error.message;
@@ -43,6 +47,12 @@ export const postSlice = createSlice({
         state.posts = state.posts.map((post) =>
           post._id === action.payload._id ? action.payload : post
         );
+      })
+      .addCase(fetchPost.fulfilled, (state, action) => {
+        state.post = action.payload;
+      })
+      .addCase(fetchPostsBySearch.fulfilled, (state, action) => {
+        state.posts = action.payload.data;
       });
   },
 });

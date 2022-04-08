@@ -11,31 +11,33 @@ import {
 import { useHistory, useParams } from 'react-router-dom';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-// import { getPost, getPostsBySearch } from '../../actions/posts.js';
 import Comments from './Comments.jsx';
+import { fetchPost, fetchPostsBySearch } from '../../services/service.js';
 
 const PostDetails = () => {
   const classes = useStyles();
 
-  const { post, posts, isLoading } = useSelector((state) => state.posts);
+  const { post, posts, status } = useSelector((state) => state.posts);
+
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
 
   //for single post
   useEffect(() => {
-    // dispatch(getPost(id));
+    dispatch(fetchPost(id));
   }, [id, dispatch]);
 
   //for recomended post
   useEffect(() => {
     if (post) {
-      dispatch();
-      // getPostsBySearch({ search: 'none', tags: post?.tags?.join(',') })
+      dispatch(
+        fetchPostsBySearch({ search: 'none', tags: post?.tags?.join(',') })
+      );
     }
   }, [post, dispatch]);
 
-  if (isLoading) {
+  if (status === 'loading') {
     return (
       <Paper className={classes.loadingPaper} elevation={5}>
         <CircularProgress size="7em" />
