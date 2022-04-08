@@ -4,9 +4,8 @@ import useStyles from './styles';
 import { Link } from 'react-router-dom';
 import { Pagination, PaginationItem } from '@material-ui/lab';
 import { ArrowBack, ArrowForward } from '@material-ui/icons';
-
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts } from '../../services/service';
+import { fetchPosts } from '../../../client/src/services/service';
 
 const Paginate = ({ page }) => {
   const classes = useStyles();

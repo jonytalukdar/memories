@@ -6,7 +6,7 @@ import useStyles from './styles';
 import memories from '../../images/memories.png';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-// import { LOGOUT } from '../../constants/actionTypes';
+import { LOGOUT } from '../../constants/actionTypes';
 
 const Navbar = () => {
   const classes = useStyles();
@@ -15,7 +15,7 @@ const Navbar = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
   const logout = () => {
-    // dispatch({ type: LOGOUT });
+    dispatch({ type: LOGOUT });
     setUser(null);
   };
 

@@ -3,8 +3,7 @@ import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import FileBase from 'react-file-base64';
 import { useHistory } from 'react-router-dom';
-// import { cretePost, updatePost } from '../../actions/posts';
-import { createPost, updatePost } from '../../services/service';
+import { cretePost, updatePost } from '../../actions/posts';
 
 import useStyles from './styles';
 
@@ -32,18 +31,17 @@ const Form = ({ currentId, setCurrentId }) => {
     }
   }, [findedPost]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (currentId) {
       dispatch(
-        updatePost({
-          id: currentId,
-          updatedData: { ...postData, creator: user?.result?.name },
-        })
+        updatePost(currentId, { ...postData, creator: user?.result?.name })
       );
     } else {
-      dispatch(createPost({ ...postData, creator: user?.result?.name }));
+      dispatch(
+        cretePost({ ...postData, creator: user?.result?.name }, history)
+      );
     }
     clear();
   };

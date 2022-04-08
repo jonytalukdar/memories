@@ -11,7 +11,7 @@ import {
 import { useHistory, useParams } from 'react-router-dom';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-// import { getPost, getPostsBySearch } from '../../actions/posts.js';
+import { getPost, getPostsBySearch } from '../../actions/posts.js';
 import Comments from './Comments.jsx';
 
 const PostDetails = () => {
@@ -24,14 +24,15 @@ const PostDetails = () => {
 
   //for single post
   useEffect(() => {
-    // dispatch(getPost(id));
+    dispatch(getPost(id));
   }, [id, dispatch]);
 
   //for recomended post
   useEffect(() => {
     if (post) {
-      dispatch();
-      // getPostsBySearch({ search: 'none', tags: post?.tags?.join(',') })
+      dispatch(
+        getPostsBySearch({ search: 'none', tags: post?.tags?.join(',') })
+      );
     }
   }, [post, dispatch]);
 
