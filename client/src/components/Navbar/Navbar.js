@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import decode from 'jwt-decode';
 
 import { AppBar, Typography, Toolbar, Avatar, Button } from '@material-ui/core';
 import useStyles from './styles';
 import memories from '../../images/memories.png';
 import { Link, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-// import { LOGOUT } from '../../constants/actionTypes';
+import { useDispatch, useSelector } from 'react-redux';
+import { logOut } from '../../features/authSlice';
 
 const Navbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const location = useLocation();
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+
+  const { user } = useSelector((state) => state.auth);
 
   const logout = () => {
-    // dispatch({ type: LOGOUT });
-    setUser(null);
+    dispatch(logOut());
   };
 
   useEffect(() => {
@@ -29,8 +29,6 @@ const Navbar = () => {
         logout();
       }
     }
-
-    setUser(JSON.parse(localStorage.getItem('profile')));
   }, [location, user?.token]);
 
   return (
@@ -48,17 +46,17 @@ const Navbar = () => {
         <img className={classes.image} src={memories} alt="icon" height="60" />
       </div>
       <Toolbar className={classes.toolbar}>
-        {user ? (
+        {user?.token ? (
           <div className={classes.profile}>
             <Avatar
               className={classes.purple}
-              src={user.result.imageUrl}
-              alt={user.result.name}
+              src={user?.result?.imageUrl}
+              alt={user?.result?.name}
             >
-              {user.result.name.charAt(0)}
+              {user?.result?.name.charAt(0)}
             </Avatar>
             <Typography className={classes.userName} variant="h6">
-              {user.result.name}
+              {user?.result?.name}
             </Typography>
             <Button
               variant="contained"

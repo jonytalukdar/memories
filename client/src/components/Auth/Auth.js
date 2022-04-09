@@ -16,7 +16,7 @@ import Icon from '../ui/Icon';
 
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-// import { signup, signin } from '../../actions/auth';
+import { signup, signin } from '../../services/auth';
 
 const initialState = {
   firstName: '',
@@ -38,11 +38,13 @@ const Auth = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // if (isSignup) {
-    //   dispatch(signup(formData, history));
-    // } else {
-    //   dispatch(signin(formData, history));
-    // }
+    if (isSignup) {
+      dispatch(signup(formData));
+      history.push('/');
+    } else {
+      dispatch(signin(formData));
+      history.push('/');
+    }
   };
 
   const handleChange = (e) => {

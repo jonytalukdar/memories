@@ -6,12 +6,14 @@ import {
   fetchPosts,
   fetchPostsBySearch,
   likePost,
+  postComment,
   updatePost,
 } from '../services/service';
 
 const initialState = {
   posts: [],
   post: {},
+  comments: [],
   status: 'idle',
   error: null,
 };
@@ -63,6 +65,9 @@ export const postSlice = createSlice({
         state.posts = state.posts.map((post) =>
           post._id === action.payload._id ? action.payload : post
         );
+      })
+      .addCase(postComment.fulfilled, (state, action) => {
+        state.comments = action.payload;
       });
   },
 });
