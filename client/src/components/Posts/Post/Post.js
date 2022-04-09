@@ -14,7 +14,7 @@ import { DeleteOutline, MoreHoriz } from '@material-ui/icons';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useStyles from './styles';
 import Likes from './Like';
 import { deletePost, likePost } from '../../../services/service';
@@ -23,7 +23,8 @@ const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  const user = JSON.parse(localStorage.getItem('profile'));
+
+  const { user } = useSelector((state) => state.auth);
 
   const hasLiked = post.likes.find(
     (like) => like._id === (post?.result?.googleId || post?.result?._id)

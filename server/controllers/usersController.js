@@ -33,7 +33,12 @@ export const signup = async (req, res) => {
       { expiresIn: '30d' }
     );
 
-    res.status(200).json({ result: user, token });
+    res
+      .status(200)
+      .json({
+        result: { name: user.name, email: user.email, _id: user._id },
+        token,
+      });
   } catch (error) {
     res.status(500).json({ message: 'something went wrong' });
   }
@@ -45,6 +50,7 @@ export const signin = async (req, res) => {
 
   try {
     const existingUser = await User.findOne({ email: email });
+
     if (!existingUser) {
       return res.status(404).json({ message: 'user does not exist' });
     }
@@ -67,7 +73,14 @@ export const signin = async (req, res) => {
       { expiresIn: '30d' }
     );
 
-    res.status(200).json({ result: existingUser, token });
+    res.status(200).json({
+      result: {
+        email: existingUser.email,
+        name: existingUser.name,
+        _id: existingUser._id,
+      },
+      token,
+    });
   } catch (error) {
     res.status(500).json({ message: 'something went wrong' });
   }

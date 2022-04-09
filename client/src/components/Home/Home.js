@@ -17,7 +17,6 @@ import Form from '../Form/Form';
 import Paginate from '../Paginate/Paginatation';
 import { useDispatch } from 'react-redux';
 import { fetchPostsBySearch } from '../../services/service';
-// import { getPostsBySearch } from '../../actions/posts';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);

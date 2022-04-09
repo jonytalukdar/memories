@@ -14,7 +14,9 @@ const Form = ({ currentId, setCurrentId }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const user = JSON.parse(localStorage.getItem('profile'));
+  // const user = JSON.parse(localStorage.getItem('profile'));
+
+  const { user } = useSelector((state) => state.auth);
 
   //states
   const [postData, setPostData] = useState({
