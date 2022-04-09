@@ -7,7 +7,6 @@ import {
   Button,
   Typography,
   ButtonBase,
-  ButtonGroup,
 } from '@material-ui/core/';
 
 import { DeleteOutline, MoreHoriz } from '@material-ui/icons';
@@ -15,11 +14,10 @@ import { DeleteOutline, MoreHoriz } from '@material-ui/icons';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 
-// import { likePost, deletePost } from '../../../actions/posts';
 import { useDispatch } from 'react-redux';
 import useStyles from './styles';
 import Likes from './Like';
-import { deletePost } from '../../../services/service';
+import { deletePost, likePost } from '../../../services/service';
 
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
@@ -36,7 +34,7 @@ const Post = ({ post, setCurrentId }) => {
   const [likes, setLikes] = useState(post?.likes);
 
   const handleLike = async () => {
-    // await dispatch(likePost(post._id));
+    await dispatch(likePost(post._id));
 
     if (hasLiked) {
       await setLikes(post?.likes?.filter((id) => id !== userId));

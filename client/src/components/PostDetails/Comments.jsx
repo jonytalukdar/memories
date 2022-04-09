@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import useStyles from './styles';
 import { Typography, Button, TextField } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
+import { postComment } from '../../services/service';
 // import { postComment } from '../../actions/posts';
 
 const Comments = ({ post }) => {
@@ -25,7 +26,7 @@ const Comments = ({ post }) => {
       comment,
     };
 
-    // dispatch(postComment(finalComment, post._id));
+    dispatch(postComment({ commentData: finalComment, id: post._id }));
 
     setNewComments((prevState) => [...prevState, finalComment]);
     setComment('');

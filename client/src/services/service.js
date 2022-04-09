@@ -86,3 +86,27 @@ export const deletePost = createAsyncThunk('posts/deletePost', async (id) => {
     return error.message;
   }
 });
+
+export const likePost = createAsyncThunk('posts/likePost', async (id) => {
+  try {
+    const { data } = await API.patch(`${`/posts`}/${id}/likePost`);
+    return data.data;
+  } catch (error) {
+    return error.message;
+  }
+});
+
+export const postComment = createAsyncThunk(
+  'posts/commentPost',
+  async ({ commentData, id }) => {
+    try {
+      const { data } = await API.post(
+        `${`/posts`}/${id}/postComment`,
+        commentData
+      );
+      return data.data.comments;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);

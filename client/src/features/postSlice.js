@@ -5,6 +5,7 @@ import {
   fetchPost,
   fetchPosts,
   fetchPostsBySearch,
+  likePost,
   updatePost,
 } from '../services/service';
 
@@ -51,8 +52,17 @@ export const postSlice = createSlice({
       .addCase(fetchPost.fulfilled, (state, action) => {
         state.post = action.payload;
       })
+      .addCase(fetchPostsBySearch.pending, (state, action) => {
+        state.status = 'loading';
+      })
       .addCase(fetchPostsBySearch.fulfilled, (state, action) => {
+        state.status = 'success';
         state.posts = action.payload.data;
+      })
+      .addCase(likePost.fulfilled, (state, action) => {
+        state.posts = state.posts.map((post) =>
+          post._id === action.payload._id ? action.payload : post
+        );
       });
   },
 });
