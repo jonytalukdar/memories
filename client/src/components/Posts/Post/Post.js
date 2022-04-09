@@ -69,16 +69,17 @@ const Post = ({ post, setCurrentId }) => {
         {user?.result?.googleId === post?.creatorId ||
           (user?.result?._id === post?.creatorId && (
             <div className={classes.overlay2} name="edit">
-              <Button
+              {/* <button> */}
+              <MoreHoriz
+                fontSize="medium"
                 onClick={(e) => {
                   e.stopPropagation();
                   setCurrentId(post._id);
                 }}
                 style={{ color: 'white' }}
                 size="small"
-              >
-                <MoreHoriz fontSize="medium" />
-              </Button>
+              />
+              {/* </button> */}
             </div>
           ))}
 

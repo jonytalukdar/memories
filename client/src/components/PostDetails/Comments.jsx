@@ -47,12 +47,16 @@ const Comments = ({ post }) => {
           <Typography gutterBottom variant="h5">
             Comments
           </Typography>
-          {newComments?.map((c, i) => (
-            <Typography key={i} gutterBottom variant="subtitle1">
-              <strong>{c.name.split(' ')[0]} : </strong>
-              {c.comment}
-            </Typography>
-          ))}
+          {newComments.length ? (
+            newComments?.map((c, i) => (
+              <Typography key={i} gutterBottom variant="subtitle1">
+                <strong>{c.name.split(' ')[0]} : </strong>
+                {c.comment}
+              </Typography>
+            ))
+          ) : (
+            <h2>No Comments</h2>
+          )}
           <div ref={commentRef} />
         </div>
         {user?.result?.name && (
